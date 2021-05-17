@@ -117,12 +117,12 @@ p {
   border-radius: 5px;
 }
 body{
-  background-image: url(../images/blur3.jpg);
+  background-image: url(./assets/images/blur3.jpg);
   background-size: cover;
   background-attachment: scroll;
 }
 #my-img {
-  background-image: url(../images/blur3.jpg);
+  background-image: url(./assets/images/blur3.jpg);
   background-size: cover;
   background-attachment: scroll;
 }
@@ -147,27 +147,27 @@ body{
   border-radius: 50%;
 }
 .icon--linkedin {
-  background-image: url(../icons/icon-linkedin.png);
+  background-image: url(./assets/icons/icon-linkedin.png);
   background-repeat: no-repeat;
   background-position: center;
 }
 .icon--twitter {
-  background-image: url(../icons/icon-twitter.png);
+  background-image: url(./assets/icons/icon-twitter.png);
   background-repeat: no-repeat;
   background-position: center;
 }
 .icon--pinterest {
-  background-image: url(../icons/icon-pinterest.png);
+  background-image: url(./assets/icons/icon-pinterest.png);
   background-repeat: no-repeat;
   background-position: center;
 }
 .icon--google-plus {
-  background-image: url(../icons/icon-google-plus.png);
+  background-image: url(./assets/icons/icon-google-plus.png);
   background-repeat: no-repeat;
   background-position: center;
 }
 .icon--rss {
-  background-image: url(../icons/icon-rss.png);
+  background-image: url(./assets/icons/icon-rss.png);
   background-repeat: no-repeat;
   background-position: center;
 }

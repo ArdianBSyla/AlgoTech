@@ -1,24 +1,50 @@
+<?php
+    session_start();
+    require_once "db.php";
+
+    if (isset($_POST['login'])) {
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+
+        $sqlLogin = "SELECT * FROM user WHERE email = '" . $email. "' and password = '" . md5($password). "'";
+        $resultLogin = mysqli_query($con, $sqlLogin);
+        if(mysqli_num_rows($resultLogin) > 0){
+            header("location: registration.php");
+            if ($row = mysqli_fetch_array($resultLogin)) {
+                $personalId = $row['personal_id'];
+                $email = $row['email'];
+                session_start();
+                $_SESSION['personal_id'] = $personalId;
+                $_SESSION['email'] = $email;
+                header("Location: home_page.php");
+            } 
+        }else {
+            $error_message = "Incorrect Email or Password!!!";
+        }
+    }
+?>
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8">
-        <link rel="stylesheet" href="../css/reset.css" type="text/css">
-        <link rel="stylesheet" href="../css/home-page-style.css" type="text/css">
-        <link rel="stylesheet" href="../css/login-page-style.css" type="text/css">
+        <link rel="stylesheet" href="./assets/css/reset.css" type="text/css">
+        <link rel="stylesheet" href="./assets/css/home-page-style.css" type="text/css">
+        <link rel="stylesheet" href="./assets/css/login-page-style.css" type="text/css">
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
         <title>AlgoTech</title>
     </head>
-    <script src="../script/home-page.js"></script>
-    <script src="../script/validations.js"></script>
+    <script src="./assets/script/validations.js"></script>
+    <script src="./assets/script/home-page.js"></script>
     <body id="my-img" onload="changeimage(5)">
        <div class="container"> 
             <header id="headeri">
                 <div>
                     <p>
-                        <a href="home_page.html" class="footerSubmitButton stylesBtn"> HOMEPAGE</a>  |  
-                        <a href="products.html" class="footerSubmitButton stylesBtn">PRODUCTS</a>  |  
-                        <a href="aboutUs.html" class="footerSubmitButton stylesBtn">ABOUT US</a>  |  
-                        <a href="login.html" target="_blank" class="footerSubmitButton stylesBtn">LOG IN</a>  |  
-                        <a href="signup.html" target="_blank" class="footerSubmitButton stylesBtn">SIGN UP</a>
+                        <a href="home_page.php" class="footerSubmitButton stylesBtn"> HOMEPAGE</a>  |  
+                        <a href="products.php" class="footerSubmitButton stylesBtn">PRODUCTS</a>  |  
+                        <a href="aboutUs.php" class="footerSubmitButton stylesBtn">ABOUT US</a>  |  
+                        <a href="login.php" target="_blank" class="footerSubmitButton stylesBtn">LOG IN</a>  |  
+                        <a href="signup.php" target="_blank" class="footerSubmitButton stylesBtn">SIGN UP</a>
                     </p>
                 </div>
                 <div class="icons">
@@ -60,44 +86,20 @@
                                 <br>
                                 <br>
                                 <div style="margin-left: 50px;" >
-                                    <form action="" style="padding: 20px;">
-                                        <svg height="130" width="500">
-                                            <defs>
-                                              <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
-                                                <stop offset="0%"
-                                                style="stop-color:rgb(255,255,0);stop-opacity:1" />
-                                                <stop offset="100%"
-                                                style="stop-color:rgb(255,0,0);stop-opacity:1" />
-                                              </linearGradient>
-                                            </defs>
-                                            <ellipse cx="100" cy="70" rx="85" ry="55" fill="url(#grad1)" />
-                                            <text fill="#ffffff" font-size="35" font-family="Georgia"
-                                            x="30" y="86">AlgoTech</text>
-                                          Sorry, your browser does not support inline SVG.
-                                          </svg>
-                                        </form>
-                                    <table>
-                                        <tr>
-                                            <td>
-                                                <img src="../icons/login-image.png" alt="login" width=380px>
-                                            </td>
-                                            <td>
-                                                <form name="loginForm" method="post" style="margin-top: 400x;" onsubmit="return validateLogInForm()">
-                                                    <p style="margin-left: 185px; color: #868686;">KYÇUNI</p>
-                                                    <div style="margin: 40px;">
-                                                       <label>Emri i perdoruesit: <input type="text" name="username" placeholder=" Username" class="text-button" style="width: 200px; background-color: aliceblue; margin-left: 20px;">
-                                                        <p id="usernameErrorValidation"></p> 
-                                                    </label>
-                                                    <div >
-                                                        <label>Fjalkalimi: <input type="password" name="password" placeholder=" Pasword" class="text-button" style="width: 200px;  background-color: aliceblue; margin-left: 85px;"> 
-                                                        <p id="passwordErrorValidation"></p>
-                                                        </label>
-                                                    </div>
-                                                    <input type="submit" value="Kyçuni" class="Login-btn" style="margin-left: 280px; ">
-                                                </form>
-                                            </td>
-                                        </tr>
-                                    </table>
+                                    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+                                        <div class="form-group ">
+                                            <label>Email</label>
+                                            <input type="email" name="email" class="form-control" value="" maxlength="30" required="">
+                                            <span class="text-danger"><?php if (isset($email_error)) echo $email_error; ?></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Password</label>
+                                            <input type="password" name="password" class="form-control" value="" maxlength="8" required="">
+                                            <span class="text-danger"><?php if (isset($password_error)) echo $password_error; ?></span>
+                                        </div>  
+                                        <input type="submit" class="btn btn-primary" name="login" value="submit">
+                                        <br>You don't have account?<a href="registration.php" class="mt-3">Click Here</a>
+                                    </form>
                                 </div>
                             </div>
                             
@@ -129,7 +131,7 @@
                         <p><b>Zbritje në Algo Tech</b></p>
                         <p>Postuar nga Gashi.</p>
                         <p class="notif-p">Këtë javë kemi zbritje të madhe në Algo Tech. Zbritja përfshinë shumë produkte të shumë kërkuara.</p>
-                        <a class="notif-a" href="./aboutUs.html">Lexoni më shumë >></a>
+                        <a class="notif-a" href="./aboutUs.php">Lexoni më shumë >></a>
                     </div>
                     <div>
                         <p class="headParagraph">MERRNI NJOFTIMET TONA</p>
@@ -150,3 +152,4 @@
         </div>
     </body>
 </html>
+

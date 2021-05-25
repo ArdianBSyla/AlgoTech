@@ -42,14 +42,14 @@ function currentSlide(num) {
 var imageID=0;
 function changeimage(every_seconds){
     if(!imageID){
-        document.getElementById("my-img").setAttribute("style", "background-image: url(../images/blur3.jpg);");
+        document.getElementById("my-img").setAttribute("style", "background-image: url(./assets/images/blur3.jpg);");
         imageID++;
     }
     else{if(imageID==1){
-        document.getElementById("my-img").setAttribute("style", "background-image: url(../images/desktop-blur.jpg);");
+        document.getElementById("my-img").setAttribute("style", "background-image: url(./assets/images/desktop-blur.jpg);");
         imageID++;
     }else{if(imageID==2){
-        document.getElementById("my-img").setAttribute("style", "background-image: url(../images/desktop-setup2-blur.jpg);");
+        document.getElementById("my-img").setAttribute("style", "background-image: url(./assets/images/desktop-setup2-blur.jpg);");
         imageID=0;
     }}}
     setTimeout("changeimage("+every_seconds+")",((every_seconds)*1000));
